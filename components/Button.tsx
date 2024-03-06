@@ -4,7 +4,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 export interface ButtonProps {
-  value: string;
+  value: number;
   onPress: () => void;
   isEqualButton?: boolean;
 }
@@ -22,6 +22,7 @@ export const Button = ({value, onPress, isEqualButton}: ButtonProps) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: 'black',
+    borderRadius: 10,
   },
   equalButton: {
     backgroundColor: 'orangered',

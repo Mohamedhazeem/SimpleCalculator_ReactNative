@@ -1,12 +1,20 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import {Button, Text, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
+import Row from './components/Row';
 
 function App() {
   return (
-    <View>
-      <Button title="Learn More" color="#841584" />
-      <Text>as</Text>
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: 'red'}}>
+        <Row
+          buttons={[
+            {value: 7, onPress: () => {}},
+            {value: 8, onPress: () => {}},
+          ]}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 

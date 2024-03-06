@@ -12,6 +12,7 @@ const Row = ({buttons}: RowProps) => {
     <View style={styles.row}>
       {buttons.map(button => (
         <Button
+          key={button.value}
           value={button.value}
           onPress={button.onPress}
           isEqualButton={button.isEqualButton}
