@@ -24,9 +24,11 @@ const Row = ({buttons}: RowProps) => {
 const styles = StyleSheet.create({
   row: {
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-around',
+    gap: 7,
   },
 });
 
