@@ -1,33 +1,32 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
 
 export interface ButtonProps {
   value: string;
-  onPress: () => void;
+  onPress?: () => void;
   isEqualButton?: boolean;
 }
 
 export const Button = ({value, onPress, isEqualButton}: ButtonProps) => {
   return (
-    <View
+    <Pressable
+      onPress={onPress}
       style={
         isEqualButton
           ? {...styles.common, ...styles.equalButton}
           : {...styles.common, ...styles.button}
       }>
-      <Text onPress={onPress} style={styles.buttonText}>
-        {value}
-      </Text>
-    </View>
+      <Text style={styles.buttonText}>{value}</Text>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   common: {
-    width: '23.5%',
-    height: '98.5%',
+    width: '23%',
+    height: '90.5%',
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'blue',
