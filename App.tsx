@@ -37,7 +37,11 @@ function App() {
                 onPress: () =>
                   handleOperator({value: Operator.MODULO, setState}),
               },
-              {value: 'X', onPress: () => handleRemove(setState)},
+              {
+                value: 'X',
+                isBackspaceButton: true,
+                onPress: () => handleRemove(setState),
+              },
               {
                 value: '/',
                 onPress: () =>

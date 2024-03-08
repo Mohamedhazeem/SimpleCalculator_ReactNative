@@ -3,13 +3,13 @@ import React from 'react';
 import {CalculatorState} from '../App';
 
 export const enum Operator {
-    ADD = '+',
-    SUBTRACT = '-',
-    MULTIPLY = '*',
-    DIVIDE = '/',
-    MODULO = '%',
-    DOT = '.',
-  }
+  ADD = '+',
+  SUBTRACT = '-',
+  MULTIPLY = '*',
+  DIVIDE = '/',
+  MODULO = '%',
+  DOT = '.',
+}
 
 interface HandleNumber {
   value: string;
@@ -31,20 +31,28 @@ export const handleNumber = ({value, setState}: HandleNumber) => {
     previousOperator: undefined,
   }));
 };
-
 export const handleOperator = ({value, setState}: HandleOperator) => {
+  setState(prevState => {
+    let updatedScreenValue = prevState.screenValue;
 
+    if (prevState.screenValue !== '0') {
+      if (prevState.previousOperator === value) {
+        updatedScreenValue = prevState.screenValue;
+      } else if (prevState.previousOperator) {
+        updatedScreenValue = prevState.screenValue.slice(0, -1) + value;
+      } else {
+        updatedScreenValue = prevState.screenValue + value;
+      }
+    } else {
+      updatedScreenValue = value;
+    }
 
-  setState(prevState => ({
-    ...prevState,
-    screenValue:
-      prevState.screenValue === '0'
-        ? value
-        : prevState.previousOperator === value
-        ? prevState.screenValue
-        : prevState.screenValue + value,
-    previousOperator: value,
-  }));
+    return {
+      ...prevState,
+      screenValue: updatedScreenValue,
+      previousOperator: value,
+    };
+  });
 };
 
 export const handleEqual = ({value, setState}: HandleEqual) => {
@@ -73,8 +81,8 @@ export const handleEqual = ({value, setState}: HandleEqual) => {
           result *= currentOperand;
           break;
         case Operator.MODULO:
-            result %= currentOperand;
-            break;
+          result %= currentOperand;
+          break;
         case Operator.DIVIDE:
           if (currentOperand === 0) {
             return;

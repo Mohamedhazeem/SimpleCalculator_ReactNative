@@ -15,6 +15,7 @@ const Row = ({buttons}: RowProps) => {
           key={button.value}
           value={button.value}
           onPress={button.onPress}
+          isBackspaceButton={button.isBackspaceButton}
           isEqualButton={button.isEqualButton}
         />
       ))}
