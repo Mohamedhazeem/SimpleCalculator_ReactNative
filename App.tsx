@@ -1,11 +1,17 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {SafeAreaView, View, StyleSheet, Text, Alert} from 'react-native';
+import {SafeAreaView, View, StyleSheet, Text} from 'react-native';
 import Row from './components/Row';
+import {
+  Operator,
+  handleNumber,
+  handleOperator,
+  handleEqual,
+  handleRemove,
+  handleClear,
+} from './utils/calculatorLogic';
 
-type Operator = '+' | '-' | '*' | '/' | '%';
-
-interface CalculatorState {
+export interface CalculatorState {
   screenValue: string;
   previousOperator?: Operator;
 }
@@ -15,82 +21,6 @@ function App() {
     screenValue: '0',
     previousOperator: undefined,
   });
-  const handleNumber = (value: string) => {
-    setState(prevState => ({
-      ...prevState,
-      screenValue:
-        prevState.screenValue === '0' ? value : prevState.screenValue + value,
-    }));
-  };
-  const handleOperator = (value: Operator) => {
-    setState(prevState => ({
-      ...prevState,
-      screenValue:
-        prevState.screenValue === '0'
-          ? value
-          : prevState.previousOperator === value
-          ? prevState.screenValue
-          : prevState.screenValue + value,
-      previousOperator: value,
-    }));
-  };
-
-  const handleEqual = () => {
-    const tokens = state.screenValue.split(/(\+|\-|\*|\/)/);
-
-    let result: number | undefined;
-    let currentOperand: number;
-
-    for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
-
-      if (!isNaN(Number(token))) {
-        currentOperand = Number(token);
-        if (result === undefined) {
-          result = currentOperand;
-          continue;
-        }
-        switch (tokens[i - 1]) {
-          case '+':
-            result += currentOperand;
-            break;
-          case '-':
-            result -= currentOperand;
-            break;
-          case '*':
-            result *= currentOperand;
-            break;
-          case '/':
-            if (currentOperand === 0) {
-              return;
-            }
-            result /= currentOperand;
-            break;
-          default:
-            return;
-        }
-      }
-    }
-    if (result !== undefined) {
-      setState({screenValue: result.toString()});
-    }
-  };
-  const handleRemove = () => {
-    setState(prevState => ({
-      ...prevState,
-      screenValue:
-        prevState.screenValue.length > 1
-          ? prevState.screenValue.slice(0, -1)
-          : '0',
-    }));
-  };
-  const handleClear = () => {
-    Alert.alert('Cleard', 'clear button work');
-    setState({
-      screenValue: '0',
-      previousOperator: undefined,
-    });
-  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -101,42 +31,72 @@ function App() {
         <View style={styles.buttonsContainer}>
           <Row
             buttons={[
-              {value: 'C', onPress: handleClear},
-              {value: '%', onPress: () => handleOperator('%')},
-              {value: 'X', onPress: handleRemove},
-              {value: '/', onPress: () => handleOperator('/')},
+              {value: 'C', onPress: () => handleClear(setState)},
+              {
+                value: '%',
+                onPress: () =>
+                  handleOperator({value: Operator.MODULO, setState}),
+              },
+              {value: 'X', onPress: () => handleRemove(setState)},
+              {
+                value: '/',
+                onPress: () =>
+                  handleOperator({value: Operator.DIVIDE, setState}),
+              },
             ]}
           />
           <Row
             buttons={[
-              {value: '7', onPress: () => handleNumber('7')},
-              {value: '8', onPress: () => handleNumber('8')},
-              {value: '9', onPress: () => handleNumber('9')},
-              {value: 'X', onPress: () => handleOperator('*')},
+              {value: '7', onPress: () => handleNumber({value: '7', setState})},
+              {value: '8', onPress: () => handleNumber({value: '8', setState})},
+              {value: '9', onPress: () => handleNumber({value: '9', setState})},
+              {
+                value: 'X',
+                onPress: () =>
+                  handleOperator({value: Operator.MULTIPLY, setState}),
+              },
             ]}
           />
           <Row
             buttons={[
-              {value: '4', onPress: () => handleNumber('4')},
-              {value: '5', onPress: () => handleNumber('5')},
-              {value: '6', onPress: () => handleNumber('6')},
-              {value: '-', onPress: () => handleOperator('-')},
+              {value: '4', onPress: () => handleNumber({value: '4', setState})},
+              {value: '5', onPress: () => handleNumber({value: '5', setState})},
+              {value: '6', onPress: () => handleNumber({value: '6', setState})},
+              {
+                value: '-',
+                onPress: () =>
+                  handleOperator({value: Operator.SUBTRACT, setState}),
+              },
             ]}
           />
           <Row
             buttons={[
-              {value: '1', onPress: () => handleNumber('1')},
-              {value: '2', onPress: () => handleNumber('2')},
-              {value: '3', onPress: () => handleNumber('3')},
-              {value: '+', onPress: () => handleOperator('+')},
+              {value: '1', onPress: () => handleNumber({value: '1', setState})},
+              {value: '2', onPress: () => handleNumber({value: '2', setState})},
+              {value: '3', onPress: () => handleNumber({value: '3', setState})},
+              {
+                value: '+',
+                onPress: () => handleOperator({value: Operator.ADD, setState}),
+              },
             ]}
           />
           <Row
             buttons={[
-              {value: '00', onPress: () => handleNumber('00')},
-              {value: '0', onPress: () => handleNumber('0')},
-              {value: '.', onPress: () => {}},
-              {value: '=', onPress: handleEqual, isEqualButton: true},
+              {
+                value: '00',
+                onPress: () => handleNumber({value: '00', setState}),
+              },
+              {value: '0', onPress: () => handleNumber({value: '0', setState})},
+              {
+                value: '.',
+                onPress: () => handleOperator({value: Operator.DOT, setState}),
+              },
+              {
+                value: '=',
+                onPress: () =>
+                  handleEqual({value: state.screenValue, setState}),
+                isEqualButton: true,
+              },
             ]}
           />
         </View>
