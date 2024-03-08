@@ -15,7 +15,7 @@ const Row = ({buttons}: RowProps) => {
           key={button.value}
           value={button.value}
           onPress={button.onPress}
-          isBackspaceButton={button.isBackspaceButton}
+          isBackscapeButton={button.isBackscapeButton}
           isEqualButton={button.isEqualButton}
         />
       ))}
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     flex: 1,
-    gap: 7,
+    gap: 18,
   },
 });
 

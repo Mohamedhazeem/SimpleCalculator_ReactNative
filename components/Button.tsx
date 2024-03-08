@@ -1,20 +1,18 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
-//import Icon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {Image, Pressable, StyleSheet, Text} from 'react-native';
 export interface ButtonProps {
   value: string;
   onPress?: () => void;
-  isBackspaceButton?: boolean;
+  isBackscapeButton?: boolean;
   isEqualButton?: boolean;
 }
 
 export const Button = ({
   value,
   onPress,
-  isBackspaceButton,
+  isBackscapeButton,
   isEqualButton,
 }: ButtonProps) => {
   return (
@@ -23,12 +21,16 @@ export const Button = ({
       style={
         isEqualButton
           ? {...styles.common, ...styles.equalButton}
+          : isBackscapeButton
+          ? {...styles.common, ...styles.clearButton}
           : {...styles.common, ...styles.button}
       }>
-      {isBackspaceButton ? (
-        <Icon name="rocket" size={30} color="#900" />
+      {isBackscapeButton ? (
+        <Image
+          source={require('./delete.png')}
+          style={styles.backspaceButton}
+        />
       ) : (
-        //<Icon name="backspace-outline" size={100} color="red" />
         <Text style={styles.buttonText}>{value}</Text>
       )}
     </Pressable>
@@ -37,22 +39,28 @@ export const Button = ({
 
 const styles = StyleSheet.create({
   common: {
-    width: '23%',
-    height: '90.5%',
+    width: '18%',
+    height: '72%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'blue',
-    borderWidth: 1,
     borderRadius: 100,
   },
   equalButton: {
-    backgroundColor: 'orange',
+    backgroundColor: '#ffc107',
   },
+  clearButton: {
+    backgroundColor: 'orangered',
+  },
+
   button: {
-    backgroundColor: 'dimgray',
+    backgroundColor: '#474747',
   },
   buttonText: {
     color: 'white',
     fontSize: 28,
+  },
+  backspaceButton: {
+    width: 40,
+    height: 40,
   },
 });
