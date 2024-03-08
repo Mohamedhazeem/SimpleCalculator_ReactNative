@@ -31,7 +31,10 @@ function App() {
         <View style={styles.buttonsContainer}>
           <Row
             buttons={[
-              {value: 'C', onPress: () => handleClear(setState)},
+              {
+                value: 'C',
+                onPress: () => handleClear(setState),
+              },
               {
                 value: '%',
                 onPress: () =>
@@ -39,7 +42,7 @@ function App() {
               },
               {
                 value: 'X',
-                isBackspaceButton: true,
+                isBackscapeButton: true,
                 onPress: () => handleRemove(setState),
               },
               {
@@ -117,24 +120,26 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    backgroundColor: 'paleturquoise',
+    backgroundColor: '#202020',
     width: '100%',
     padding: 10,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
+    borderBottomWidth: 1,
+    borderColor: 'grey',
   },
   screenText: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
   buttonsContainer: {
     flex: 2,
-    gap: 7,
+    gap: 8,
     justifyContent: 'center',
-    backgroundColor: 'lightslategrey',
+    backgroundColor: '#202020',
     width: '100%',
-    padding: 7,
+    padding: 10,
   },
 });
 
