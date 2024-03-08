@@ -8,7 +8,6 @@ export const enum Operator {
   MULTIPLY = '*',
   DIVIDE = '/',
   MODULO = '%',
-  DOT = '.',
 }
 
 interface HandleNumber {
@@ -95,6 +94,7 @@ export const handleEqual = ({value, setState}: HandleEqual) => {
     }
   }
   if (result !== undefined) {
+    result = Math.round(result * 1000) / 1000;
     setState({screenValue: result.toString()});
   }
 };

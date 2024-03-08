@@ -96,7 +96,7 @@ function App() {
               {value: '0', onPress: () => handleNumber({value: '0', setState})},
               {
                 value: '.',
-                onPress: () => handleOperator({value: Operator.DOT, setState}),
+                onPress: () => handleNumber({value: '.', setState}),
               },
               {
                 value: '=',
